@@ -14,7 +14,18 @@ public class Money {
         normalize();
     }
 
-    // Normalize method to adjust cents (e.g., 120 cents = 1 dollar + 20 cents)
+    // Constructor for whole dollar amounts
+    public Money(int dollars) {
+        this(dollars, 0);
+    }
+
+    // Copy Constructor
+    public Money(Money other) {
+        this.dollars = other.dollars;
+        this.cents = other.cents;
+    }
+
+    // Normalize method to adjust cents
     private void normalize() {
         if (cents >= 100) {
             dollars += cents / 100;
@@ -42,7 +53,7 @@ public class Money {
     public void subtract(Money amount) {
         int totalCents1 = this.dollars * 100 + this.cents;
         int totalCents2 = amount.dollars * 100 + amount.cents;
-        
+
         if (totalCents1 >= totalCents2) {
             totalCents1 -= totalCents2;
             this.dollars = totalCents1 / 100;

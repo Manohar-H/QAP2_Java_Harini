@@ -11,42 +11,43 @@ public class CreditCard {
     // Constructor
     public CreditCard(Person owner, Money creditLimit) {
         this.owner = owner;
-        this.balance = new Money(0, 0);
-        this.creditLimit = creditLimit;
+        this.balance = new Money(0); // Start with $0 balance
+        this.creditLimit = new Money(creditLimit); // Use copy constructor
     }
 
-    // Getters
-    public Person getOwner() {
-        return owner;
-    }
-
+    // Getters using copy constructor
     public Money getBalance() {
-        return balance;
+        return new Money(balance);
     }
 
     public Money getCreditLimit() {
-        return creditLimit;
+        return new Money(creditLimit);
+    }
+
+    // Get owner details
+    public String getPersonals() {
+        return owner.toString();
     }
 
     // Charge an amount to the credit card
     public void charge(Money amount) {
-        int newBalance = (balance.getDollars() * 100 + balance.getCents()) + 
+        int newBalance = (balance.getDollars() * 100 + balance.getCents()) +
                          (amount.getDollars() * 100 + amount.getCents());
 
         int creditLimitCents = creditLimit.getDollars() * 100 + creditLimit.getCents();
 
         if (newBalance <= creditLimitCents) {
             balance.add(amount);
-            System.out.println("Charge successful: " + amount);
+            System.out.println("Charge: " + amount);
         } else {
-            System.out.println("Charge denied: Exceeds credit limit.");
+            System.out.println("Exceeds credit limit");
         }
     }
 
-    // Make a payment
-    public void makePayment(Money amount) {
+    // Fix: Rename `makePayment()` to `payment()`
+    public void payment(Money amount) {
         balance.subtract(amount);
-        System.out.println("Payment successful: " + amount);
+        System.out.println("Payment: " + amount);
     }
 
     // toString method
